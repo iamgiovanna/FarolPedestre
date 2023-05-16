@@ -16,10 +16,7 @@ void setup()
   pinMode(ledvermelha, OUTPUT);
   pinMode(ledamarela, OUTPUT);
   pinMode(botao, INPUT_PULLUP);
- attachInterrupt(digitalPinToInterrupt(botao) , blink1 , CHANGE);
-
- 
-
+  attachInterrupt(digitalPinToInterrupt(botao) , blink1 , CHANGE);
 }
 
 //verificar em que cor está o farol
@@ -28,9 +25,7 @@ void loop()
 {
   //carro verde
   digitalWrite(ledverde, HIGH);
- 
   digitalWrite(ledamarela, LOW);
-
   digitalWrite(ledvermelha, LOW);
 
    
@@ -39,11 +34,9 @@ void loop()
   digitalWrite(ledvermelha2, HIGH);
   delay(5000);
   
-    //carro verde
+   //carro amarelo
   digitalWrite(ledverde, LOW);
- 
   digitalWrite(ledamarela, HIGH);
-
   digitalWrite(ledvermelha, LOW);
 
    
@@ -52,35 +45,59 @@ void loop()
   digitalWrite(ledvermelha2, HIGH);
   delay(5000);
   
-  if (digitalRead(botao)== HIGH)
-{   
-   //CARRO AMARELO
-  digitalWrite(ledamarela, HIGH);
-
+  //carro vermelho
   digitalWrite(ledverde, LOW);
+  digitalWrite(ledamarela, LOW);
+  digitalWrite(ledvermelha, HIGH);
+  delay(5000);
 
+
+  //verde pedestre
+  digitalWrite(ledverde2, HIGH);
+  digitalWrite(ledvermelha2, LOW);
+  delay(5000);
+
+  
+  if (digitalRead(2)== HIGH)
+{   //chamando a função
+  
+    pedestre();
+}
+  
+}
+
+void pedestre()
+{
+ //CARRO AMARELO
+  digitalWrite(ledamarela, HIGH);
+  digitalWrite(ledverde, LOW);
   digitalWrite(ledvermelha, LOW);
   delay(2000); 
 	
   //vermelho pedestre
   digitalWrite(ledverde2, LOW);
- 
   digitalWrite(ledvermelha2, HIGH);
   delay(5000); 
  	    
-  
   //VERDE PEDESTRE E VERMELHO CARRO
   digitalWrite(ledverde2, HIGH);
   digitalWrite(ledvermelha, HIGH);
   digitalWrite(ledamarela, LOW);
   digitalWrite(ledvermelha2, LOW);
   delay(5000);
-	
-  }
   
+  for(int i=0; i<=10; i++){
+  //pisca pisca
+    digitalWrite(ledvermelha2,HIGH);
+  	delay(100);
+    digitalWrite(ledvermelha2, LOW);
+	delay(100);
+  }
 
 }
-void blink1(){
-state =  !state;
+
+void blink1()
+{
+	state =  !state;
 }
 
