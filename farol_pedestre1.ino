@@ -1,6 +1,3 @@
-// C++ code
-//
-
 const int ledverde = 1;
 const int ledamarela = 5;
 const int ledvermelha = 9;
@@ -8,96 +5,68 @@ const int ledvermelha2 = 3;
 const int ledverde2 = 6;
 const byte botao = 2;
 volatile byte state = LOW;
+boolean delayled = false;
 
+//todos com o número 2 é pedestre
 
-void setup()
-{
-  pinMode(ledverde, OUTPUT);
-  pinMode(ledvermelha, OUTPUT);
-  pinMode(ledamarela, OUTPUT);
-  pinMode(botao, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(botao) , blink1 , CHANGE);
+void setup() {
+    pinMode(ledverde,OUTPUT);
+    pinMode(ledamarela,OUTPUT);
+    pinMode(ledvermelha,OUTPUT);
+    pinMode(ledverde2,OUTPUT);
+    pinMode(ledvermelha2,OUTPUT);
+    pinMode(botao, INPUT);
+    attachInterrupt(digitalPinToInterrupt(botao), pedestre, CHANGE);
 }
 
-//verificar em que cor está o farol
-
-void loop()
-{
-  //carro verde
+void loop() {
+  
   digitalWrite(ledverde, HIGH);
   digitalWrite(ledamarela, LOW);
   digitalWrite(ledvermelha, LOW);
-
-   
-  //vermelho pedestre
+  
   digitalWrite(ledverde2, LOW);
   digitalWrite(ledvermelha2, HIGH);
-  delay(5000);
   
-   //carro amarelo
+  for(int i = 0; delayled == false && i <3000;i+=100){
+  	delay(300);
+  }
+ 
+  //carro amarelo
   digitalWrite(ledverde, LOW);
   digitalWrite(ledamarela, HIGH);
   digitalWrite(ledvermelha, LOW);
-
-   
-  //vermelho pedestre
+  delay(2000);
+  
+  /*ped vermelho
   digitalWrite(ledverde2, LOW);
-  digitalWrite(ledvermelha2, HIGH);
-  delay(5000);
+  digitalWrite(ledvermelha2, HIGH);*/
   
   //carro vermelho
   digitalWrite(ledverde, LOW);
-  digitalWrite(ledamarela, LOW);
-  digitalWrite(ledvermelha, HIGH);
-  delay(5000);
-
-
-  //verde pedestre
+  digitalWrite(ledamarela,LOW);
+  digitalWrite(ledvermelha,HIGH);
+  
   digitalWrite(ledverde2, HIGH);
-  digitalWrite(ledvermelha2, LOW);
-  delay(5000);
+  digitalWrite(ledvermelha2,LOW);
+  delay(3000);
 
-  
-  if (digitalRead(2)== HIGH)
-{   //chamando a função
-  
-    pedestre();
-}
-  
-}
-
-void pedestre()
-{
- //CARRO AMARELO
-  digitalWrite(ledamarela, HIGH);
-  digitalWrite(ledverde, LOW);
-  digitalWrite(ledvermelha, LOW);
-  delay(2000); 
-	
-  //vermelho pedestre
   digitalWrite(ledverde2, LOW);
-  digitalWrite(ledvermelha2, HIGH);
-  delay(5000); 
- 	    
-  //VERDE PEDESTRE E VERMELHO CARRO
-  digitalWrite(ledverde2, HIGH);
-  digitalWrite(ledvermelha, HIGH);
-  digitalWrite(ledamarela, LOW);
-  digitalWrite(ledvermelha2, LOW);
-  delay(5000);
+  delay(1000);
   
-  for(int i=0; i<=10; i++){
-  //pisca pisca
-    digitalWrite(ledvermelha2,HIGH);
-  	delay(100);
-    digitalWrite(ledvermelha2, LOW);
-	delay(100);
+  for(int i= 0; i<= 12; i++){
+   digitalWrite(ledvermelha2, !(digitalRead(ledvermelha2)));
+    	delay(250);
+  
   }
-
+  if(delayled == true){
+  	delayled = false;
+  }
 }
 
-void blink1()
+ 
+ void pedestre()
 {
-	state =  !state;
+   Serial.println("Passei por aqui");
+   delayled = true;
 }
-
